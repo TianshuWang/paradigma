@@ -20,12 +20,11 @@ nivel nombre
  |otherwise = "avanzado"
 
 puedeOtorgar::String->Int->Bool
-puedeOtorgar nombre punto
- |nombre == "admin" = False
- |nivel nombre == "newbie" && punto <=1 = True
- |nivel nombre == "intermedio" && punto <=5 = True
- |nivel nombre == "avanzado" && punto <=10 = True
- |otherwise = False
+puedeOtorgar "admin"_ = False
+puedeOtorgar nombre punto = punto < puntosMaximo(nivel nombre)
+puntosMaximo "newbie" = 1
+puntosMaximo "intermedio" = 5
+puntosMaximo "avanzado" = 10
 
 tieneMasPuntos::String->String->String
 tieneMasPuntos nombre1 nombre2
