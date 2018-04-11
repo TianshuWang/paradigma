@@ -10,16 +10,16 @@ anilloExtra = (UnAnillo 100 "Super Poder")
 poderDelAnillo::Anillo->Int
 poderDelAnillo (UnAnillo peso frase) = peso * (length frase)
 
+absoluto n
+ | n<=0 = 0
+ | otherwise = n
+ 
 resistenciaDeHobbits::Hobbits->Int
 resistenciaDeHobbits(UnHobbits nom estat salud fuerza esCom anillo)
- |esCom == True = estat * salud + fuerza - (poderDelAnillo anillo)
- |esCom == False = salud * fuerza - (poderDelAnillo anillo)
- |head nom == 'F' = 10 + (resistenciaDeHobbits (UnHobbits nom estat salud fuerza esCom anillo))
- |resistenciaDeHobbits(UnHobbits nom estat salud fuerza esCom anillo)<0 = 0
-
-
-
-
+ |(esCom == True && (head nom) == 'F') = absoluto(10 + estat * salud + fuerza - (poderDelAnillo anillo))
+ |(esCom == False && (head nom) == 'F') = absoluto(10 + salud * fuerza - (poderDelAnillo anillo))
+ | esCom == True = absoluto(estat * salud + fuerza - (poderDelAnillo anillo))
+ | otherwise = absoluto(salud * fuerza - (poderDelAnillo anillo))
 
 cambiarAnillo::Hobbits->Anillo->Hobbits
 cambiarAnillo (UnHobbits nom estat salud fuerza esCom anillo) anilloNuevo = (UnHobbits nom estat salud fuerza esCom anilloNuevo)
