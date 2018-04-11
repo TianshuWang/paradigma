@@ -10,6 +10,7 @@ anilloExtra = (UnAnillo 100 "Super Poder")
 poderDelAnillo::Anillo->Int
 poderDelAnillo (UnAnillo peso frase) = peso * (length frase)
 
+absoluto::Int->Int
 absoluto n
  | n<=0 = 0
  | otherwise = n
