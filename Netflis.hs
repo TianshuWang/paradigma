@@ -124,13 +124,13 @@ promedioCalif maraton = div (sum(map califSerie maraton)) (length maraton)
 
 promedioCalifListaM maratones = div(sum(map promedioCalif maratones)) (length maratones)
 
-califMaxSerie serie = califSerie serie == 5
+maxCalif maraton =  maximum(map califSerie maraton)
 
-mejorCalifSerie maraton = filter califMaxSerie maraton
+mejorSerie maraton = filter (\x-> califSerie x == maxCalif maraton) maraton
 
-duracionMax serie = serieDuracion serie == 1000
+duracionMax maraton = maximum(map serieDuracion maraton)
 
-duracionMaxSerie maraton = filter duracionMax maraton
+duracionMaxSerie maraton = filter (\x->serieDuracion x == duracionMax maraton) maraton
 
 data Critico = UnCritico{
  nombreCritico::String,
