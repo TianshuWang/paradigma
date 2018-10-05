@@ -1,0 +1,43 @@
+import persona.*
+import parasito.*
+
+describe "Tests para Parasitos" {
+	
+	var morty
+	var summer
+	var beth
+	var tioSteve
+	var primoNicky
+	var frankestein
+	
+	fixture {
+		
+		tioSteve = new Parasito(poder = 1,nivelLastima = 60)
+		primoNicky = new Parasito(poder = 5,nivelLastima = 70)
+		frankestein = new Parasito(poder = 10,nivelLastima = 40)
+		morty = new Persona(nivelCordura = 56, parasitos = [tioSteve,primoNicky])
+		summer = new Persona(nivelCordura = 70)
+		beth = new Persona(nivelCordura = 98, parasitos = [frankestein])
+				
+	}
+
+	test "El nivel de cordura de Morty es de 50 despues de infectar por sus parasitos" {
+		
+		morty.infectada()
+		assert.equals(50,morty.nivelCordura())
+
+	}
+	
+	test "El nivel de Summer es 70 " {
+		
+		assert.equals(70,summer.nivelCordura())
+	}
+	
+	test "El nivel de cordura de Beth es de 88 despues de infectar por sus parasitos" {
+		
+		beth.infectada()
+		assert.equals(88,beth.nivelCordura())
+
+	}
+	
+}

@@ -1,0 +1,43 @@
+import persona.*
+import parasito.*
+
+
+describe "Tests B" {
+	
+	var morty
+	var summer
+	var beth
+	var tioSteve
+	var primoNicky
+	var frankestein
+	
+	fixture {
+		
+		tioSteve = new Parasito(poder = 1,nivelLastima = 60)
+		primoNicky = new Parasito(poder = 5,nivelLastima = 70)
+		frankestein = new Parasito(poder = 10,nivelLastima = 40)
+		morty = new Persona(nivelCordura = 56, parasitos = [tioSteve,primoNicky])
+		summer = new Persona(nivelCordura = 70)
+		beth = new Persona(nivelCordura = 98, parasitos = [frankestein])
+		morty.infectadaPor(morty.parasitos())
+				
+	}
+	
+	test "Morty contacta con Summer, el nivel de cordura de Summer es 63" {
+
+		morty.contactarCon(summer)
+		assert.equals(63,summer.nivelCordura())
+
+	}
+	
+	test "Morty contacta con Beth, el nivel de cordura de Beth es 78.5" {
+		
+		morty.contactarCon(beth)
+		assert.equals(78.5,beth.nivelCordura())
+	}
+	
+	test "Morty contacta con Beth, y queda igual a como estaba" {
+		
+		assert.equals(50,morty.nivelCordura())
+	}
+}
