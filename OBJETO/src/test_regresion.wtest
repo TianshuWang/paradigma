@@ -1,0 +1,91 @@
+import personaje.*
+import hechizos.*
+import refuerzos.*
+import artefactos.*
+import comerciantes.*
+
+
+describe "Tests de la parte 4" {
+	
+	var alacachulaCachicomula = new HechizoLogo(multiplo = 1, nombre = 'alacachula cachicomula')
+	var	xenia = new Personaje(hechizoPreferido = alacachulaCachicomula,cargaMaxima = 200 )
+	var	thor = new Personaje(hechizoPreferido = hechizoBasico,cargaMaxima = 200)
+	var	loki = new Personaje(monedas = 5, hechizoPreferido = hechizoBasico,cargaMaxima = 200)
+	var	mockHnos = new Comerciante(categoria = new ComercianteSinCategoria())
+	var feria = new Comerciante(categoria = new ComercianteSinCategoria())
+	
+
+	test "El precio del hechizo alacachulaCachicomula es 22" {
+
+		assert.equals(22,alacachulaCachicomula.precio())
+
+	}
+	
+	test "A Xenia le queda 100 monedas despues de canjear un hechizo basico" {
+		
+		xenia.canjeasHechizo(feria,hechizoBasico)
+		assert.equals(100,xenia.monedas())
+	}
+	
+	test "A Thor le queda 83 monedas despues de canjear un hechizo de logos “alacachula cachicomula” " {
+		
+		thor.canjeasHechizo(feria,alacachulaCachicomula)
+		assert.equals(83,thor.monedas())
+	}
+	
+	test "A Thor le queda 90 monedas despues de canjear 2 veces el hechizo basico" {
+		
+		2.times{x => thor.canjeasHechizo(feria,hechizoBasico)}
+		assert.equals(90,thor.monedas())
+	}
+	
+	test "Loki no puede canjear el hechizo de logos “alacachula cachicomula” " {
+		
+		assert.throwsExceptionWithMessage("Saldo insuficiente !",{loki.canjeasHechizo(feria,alacachulaCachicomula)})
+	}
+	
+	test "A Xenia le queda 85.5 monedas por comprar una espada, un collar divino (de 5 perlas), una armadura sin refuerzo y otra armadura con malla de cota cuyo valor de lucha es 5. "{
+		
+		var espada = new Arma()
+		var armaduraNada = new Armadura(refuerzo = ningunRefuerzo)
+		var armaduraCotaDeMalla = new Armadura(refuerzo = cotaDeMalla)
+		
+		xenia.comprasArtefactos(mockHnos,[espada,collarDivino,armaduraNada,armaduraCotaDeMalla])
+		assert.equals(85.5,xenia.monedas())
+	}
+	
+	test "Xenia tiene 4 artefactos despues de comprar una espada, un collar divino (de 5 perlas), una armadura sin refuerzo y otra armadura con malla de cota cuyo valor de lucha es 5" {
+		
+		var espada = new Arma()
+		var armaduraNada = new Armadura(refuerzo = ningunRefuerzo)
+		var armaduraCotaDeMalla = new Armadura(refuerzo = cotaDeMalla)
+		
+		xenia.comprasArtefactos(mockHnos,[espada,collarDivino,armaduraNada,armaduraCotaDeMalla])
+		assert.equals(4,xenia.cantArtefactos())
+	}
+	
+	test "A Thor le queda 74 monedas por compra una armadura con bendición como refuerzo, y una armadura reforzada con el hechizo alacachula  "{
+		
+		var armadura = new Armadura(refuerzo = bendicion)
+		var armaduraReforzada = new Armadura(refuerzo = alacachulaCachicomula)
+		
+		thor.comprasArtefactos(feria,[armadura,armaduraReforzada])
+		assert.equals(74,thor.monedas())
+	}
+	
+	test "Loki no puede comprar el espejo" {		
+		
+		assert.throwsExceptionWithMessage("Saldo insuficiente !",{loki.comprasArtefactos(feria,[espejo])})
+	}
+	
+	test "A Xenia le queda 69 monedas por canjear un libro de hechizos que contiene el hechizo de logos de nombre “alacachula cachicomula” y el hechizo básico." {
+		
+		var libroDeHechizos = new LibroDeHechizos(hechizos = [alacachulaCachicomula,hechizoBasico])
+		xenia.canjeasHechizo(feria,libroDeHechizos)
+		assert.equals(69,xenia.monedas())
+		
+	}
+	
+	
+	
+}
